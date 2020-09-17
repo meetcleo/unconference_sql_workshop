@@ -48,3 +48,4 @@
     1. `users.snooze_until`
     1. `firebase_tokens.invalidated_at`
     1. `messages.body` (this won't actually make a difference)
+1. Let's add a [gin](https://hashrocket.com/blog/posts/exploring-postgres-gin-index) index to `messages.body`

@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_141159) do
+ActiveRecord::Schema.define(version: 2020_09_17_224327) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
+  enable_extension "plpgsql"
 
   create_table "firebase_tokens", force: :cascade do |t|
     t.string "token"
@@ -23,6 +27,7 @@ ActiveRecord::Schema.define(version: 2020_09_17_141159) do
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.bigint "user_id", null: false
+    t.index ["body"], name: "index_messages_on_body", opclass: :gin_trgm_ops, using: :gin
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
