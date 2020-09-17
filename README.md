@@ -27,3 +27,7 @@
     1. Message: `rails generate model message body:text user:references --no-timestamps`
     1. FirebaseToken: `rails generate model firebase_token token:string invalidated_at:datetime user:references --no-timestamps`
     1. Apply to database: `rails db:setup`
+1. We want to find users that have recently sent a message asking for help so we can reach out to them (we'll create the `User.need_help` scope). These users should:
+    1. Not have notifications snoozed
+    1. Have a message with the word `help` in the body
+    1. Have a Firebase token that is not invalidated
