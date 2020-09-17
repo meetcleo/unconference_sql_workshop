@@ -34,3 +34,17 @@
 1. We want to generate a sample of data over which we will analyze performance
     1. Generate on the scale of 10's: `rake data:generate_a_little`
     1. Generate on the scale of 10's of thousands: `rake data:generate_a_lot`
+1. Let's run an `EXPLAIN ANALYZE`, see [these](https://www.postgresql.org/docs/9.1/using-explain.html) docs, on the query, both with a little and a lot of data to see the difference. Remember, in a real-world scenario, we might run this thousands of times a minute.
+    ```
+    EXPLAIN ANALYZE
+    SELECT DISTINCT users.* FROM "users"
+    INNER JOIN "firebase_tokens" ON "firebase_tokens"."user_id" = "users"."id"
+    INNER JOIN "messages" ON "messages"."user_id" = "users"."id"
+    WHERE ("users"."snooze_until" IS NULL OR (snooze_until < '2020-09-17 15:57:25.086412'))
+    AND "firebase_tokens"."invalidated_at" IS NULL
+    AND (body ilike '%help%');
+    ```
+1. Let's add some indexes on the fields on which we're filtering
+    1. `users.snooze_until`
+    1. `firebase_tokens.invalidated_at`
+    1. `messages.body` (this won't actually make a difference)

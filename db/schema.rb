@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2020_09_17_141159) do
     t.string "token"
     t.datetime "invalidated_at"
     t.bigint "user_id", null: false
+    t.index ["invalidated_at"], name: "index_firebase_tokens_on_invalidated_at"
     t.index ["user_id"], name: "index_firebase_tokens_on_user_id"
   end
 
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_09_17_141159) do
     t.string "name"
     t.string "email"
     t.datetime "snooze_until"
+    t.index ["snooze_until"], name: "index_users_on_snooze_until"
   end
 
   add_foreign_key "firebase_tokens", "users"
