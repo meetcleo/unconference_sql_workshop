@@ -22,3 +22,8 @@
 ## Steps
 
 1. Generate bare-bones Rails project: `rails new unconference_sql_workshop --api -M -P -C -S -J -T -d postgresql`
+1. Generate models:
+    1. User: `rails generate model user name:string email:string snooze_until:datetime --no-timestamps`
+    1. Message: `rails generate model message body:text user:references --no-timestamps`
+    1. FirebaseToken: `rails generate model firebase_token token:string invalidated_at:datetime user:references --no-timestamps`
+    1. Apply to database: `rails db:setup`
