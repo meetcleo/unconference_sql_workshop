@@ -31,3 +31,6 @@
     1. Not have notifications snoozed
     1. Have a message with the word `help` in the body
     1. Have a Firebase token that is not invalidated
+1. We want to generate a sample of data over which we will analyze performance
+    1. Generate on the scale of 10's: `rake data:generate_a_little`
+    1. Generate on the scale of 10's of thousands: `rake data:generate_a_lot`
