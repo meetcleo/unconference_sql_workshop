@@ -49,3 +49,12 @@
     1. `firebase_tokens.invalidated_at`
     1. `messages.body` (this won't actually make a difference)
 1. Let's add a [gin](https://hashrocket.com/blog/posts/exploring-postgres-gin-index) index to `messages.body`
+1. Let's rewrite the query to be even more efficient
+    ```
+    EXPLAIN ANALYZE
+    SELECT users.* FROM "users"
+    WHERE ("users"."snooze_until" IS NULL OR (snooze_until < '2020-09-17 15:57:25.086412'))
+    AND EXISTS (SELECT 1 FROM "firebase_tokens" WHERE "firebase_tokens"."user_id" = "users"."id" AND "firebase_tokens"."invalidated_at" IS NULL)
+    AND EXISTS (SELECT 1 FROM "messages" WHERE "messages"."user_id" = "users"."id" AND (body ilike '%help%'));
+    ```
+1. How do we represent this in ActiveRecord?
